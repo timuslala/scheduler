@@ -11,3 +11,6 @@ wheels/
 
 # Secrets
 .env
+
+# Local deployment file
+/auth_service/docker-compose.yml

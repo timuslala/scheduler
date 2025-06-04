@@ -7,7 +7,7 @@ from app.crud import create_user
 from app.dependencies import get_db
 from jose import jwt
 from datetime import datetime, timedelta
-from dotenb import load_dotenv
+from dotenv import load_dotenv
 import os
 
 app = FastAPI(title="Auth Service")

@@ -7,10 +7,12 @@ requires-python = ">=3.13"
 dependencies = [
     "bcrypt>=4.3.0",
     "black>=25.1.0",
+    "dotenv>=0.9.9",
     "fastapi[standard]>=0.115.12",
     "passlib>=1.7.4",
     "psycopg2>=2.9.10",
     "python-jose[cryptography]>=3.5.0",
     "python-multipart>=0.0.20",
     "sqlmodel>=0.0.24",
+    "uvicorn[standard]>=0.34.3",
 ]

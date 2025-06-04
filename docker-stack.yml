@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - webnet
+
+  auth:
+    image: timuslala/auth:latest
+    environment:
+      DATABASE_URL: postgresql://myuser:mypassword@db:5432/mydatabase
+    ports:
+      - target: 8000
+        published: 80
+        mode: ingress
+    networks:
+      - webnet
+    command: /usr/local/bin/uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  db_data:
+
+networks:
+  webnet:
+    driver: overlay
