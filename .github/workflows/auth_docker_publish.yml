@@ -41,17 +41,18 @@ jobs:
 
       - name: SSH and Deploy
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: ${{ secrets.DOCKERHUB_USERNAME }}
           script: |
             echo "Cleaning Docker system..."
             docker system prune -a -f --volumes
 
             echo "Pulling latest image..."
-            docker pull ${DOCKERHUB_USERNAME}/auth:latest
+            docker pull $DOCKERHUB_USERNAME/auth:latest
 
             echo "Deploying stack..."
             docker stack deploy -c ~/docker-stack.yml mystack
