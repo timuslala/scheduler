@@ -51,5 +51,8 @@ jobs:
             echo "Cleaning Docker system..."
             docker system prune -a -f
 
+            echo "Pulling latest image..."
+            docker pull "$DOCKERHUB_USERNAME/auth:latest"
+
             echo "Deploying stack..."
             docker stack deploy -c ~/docker-stack.yml mystack
