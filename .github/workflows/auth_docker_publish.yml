@@ -48,17 +48,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "DockerHub Username: $DOCKERHUB_USERNAME"
-            if [ -z "$DOCKERHUB_USERNAME" ]; then
-              echo "Error: DOCKERHUB_USERNAME is not set"
-              exit 1
-            fi
-
             echo "Cleaning Docker system..."
             docker system prune -a -f
-
-            echo "Pulling latest image..."
-            docker pull "$DOCKERHUB_USERNAME/auth:latest"
 
             echo "Deploying stack..."
             docker stack deploy -c ~/docker-stack.yml mystack
