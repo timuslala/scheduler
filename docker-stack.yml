@@ -11,6 +11,9 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - webnet
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   auth:
     image: timuslala/auth:latest
