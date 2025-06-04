@@ -45,7 +45,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: ${{ sDOCKERHUB_USERNAME }}
+          envs: ${{ DOCKERHUB_USERNAME }}
           script: |
             echo "Cleaning Docker system..."
             docker system prune -a -f --volumes
