@@ -41,8 +41,6 @@ jobs:
 
       - name: SSH and Deploy
         uses: appleboy/ssh-action@v1.0.3
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -52,7 +50,7 @@ jobs:
             docker system prune -a -f
 
             echo "Pulling latest image..."
-            docker pull "$DOCKERHUB_USERNAME/auth:latest"
+            docker pull "${{ secrets.DOCKERHUB_USERNAME }}/auth:latest"
 
             echo "Deploying stack..."
-            docker stack deploy -c ~/docker-stack.yml mystack
+            docker stack deploy -c ~/docker-stack.yml mystack --detach=true
