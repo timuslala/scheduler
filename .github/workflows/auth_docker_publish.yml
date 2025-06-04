@@ -3,7 +3,7 @@ name: Build, Push, and Deploy
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-push-deploy:
@@ -28,7 +28,7 @@ jobs:
           context: ./auth_service
           file: ./auth_service/Dockerfile
           push: true
-          tags: yourusername/my-web-app:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/auth:latest
 
       - name: Copy Stack File to Server
         uses: appleboy/scp-action@v0.1.4
@@ -47,10 +47,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "Cleaning Docker system..."
-            docker system prune -af --volumes
+            docker system prune -a -f --volumes
 
             echo "Pulling latest image..."
-            docker pull yourusername/my-web-app:latest
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/auth:latest
 
             echo "Deploying stack..."
             docker stack deploy -c ~/docker-stack.yml mystack
